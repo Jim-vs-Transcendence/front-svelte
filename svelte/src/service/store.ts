@@ -22,7 +22,7 @@ function setAuth() {
 
     let values = {...initValues}
 
-    const { subscribe, set, update } = writable(values);
+    const { set, update } = writable(values);
 
     const isLogin = async () => {
         try {
@@ -32,7 +32,7 @@ function setAuth() {
         catch(error) 
         {
             resetUserInfo();
-            resetAuthToken();
+            authToken.resetAuthToken();
         }
     }
 
@@ -41,29 +41,9 @@ function setAuth() {
         set(newValues);
     }
 
-    const register = async (email: string, password: string) => {
-        try{
-            const options = {
-                path: '/users',
-                data: {
-                    email: email,
-                    password: password,
-                }
-            }
-            await postApi(options);
-            alert('가입 성공');
-            goto('/login');
-        }
-        catch(error){
-            alert("ghldnjsrkdlq dhfb");
-        }
-    }
-
     return {
-        subscribe,
         isLogin,
         resetUserInfo,
-        register,
     }
 }
 
@@ -73,43 +53,35 @@ function setAuthToken() {
         token = localStorage.getItem('authToken');
     }
 
-    const { subscribe, set } = writable(token);
+    const { set } = writable(token);
 
-    const login = async (email: string, password: string) => {
+    const login = async () => {
         try {
-            const options = {
-                path: '/login',
-                data: {
-                    email: email,
-                    password: password,
-                }
-            }
-            const response = await postApi(options);
-            token = response.authToken;
+            const response = await getApi({ path: 'user/token' });
+            console.log(response);
+            token = response.key;
 
-            if (browser) {
-                localStorage.setItem('authToken', token);
-            }
-            set(token);
-            goto('/');
+            console.log(token);
+            // if (browser) {
+            //     localStorage.setItem('authToken', token);
+            // }
+            // set(token);
+            // goto('/main');
         }
         catch(error) {
-            alert('오류 발생')
+            alert(error)
         }
     }
 
     const logout = async() => {
         try {
-            const options = {
-                path: '/logout'
-            }
-            await postApi(options);
+            await postApi({ path: 'user/logout', data: null});
             if (browser) {
                 resetAuthToken();
             }
         }
         catch(error){
-            alert('오류 발생 -> 로그아웃')
+            alert('오류 발생 : 로그아웃')
         }
     }
     const resetAuthToken = () => {
@@ -120,7 +92,6 @@ function setAuthToken() {
     }
 
     return {
-        subscribe,
         login,
         logout,
         resetAuthToken,

@@ -12,9 +12,9 @@
   
   <div class="sidebar">
     <ul>
-      <li><a href="#">Nickname1 </a></li>
-      <li><a href="#">Sesim</a></li>
-      <li><a href="#">Whatever</a></li>
+      <li><a href="/profile/Nickname1">Nickname1 </a></li>
+      <li><a href="/profile/jinwoole">jinwoole</a></li>
+      <li><a href="/profile/Whatever">Whatever</a></li>
     </ul>
   </div>
   

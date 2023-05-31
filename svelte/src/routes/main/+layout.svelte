@@ -2,6 +2,5 @@
     import UserLayout from "../../components/Auth/UserLayout.svelte";
 </script>
 
-<UserLayout></UserLayout>
-
+<UserLayout />
 <slot />

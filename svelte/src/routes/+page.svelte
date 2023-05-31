@@ -1,9 +1,32 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { goto } from '$app/navigation'
+  import { getApi } from '../service/api'
+
+  import { authToken } from '../service/store';
   
-  const login = () => {
-    goto('/main');
-  }
+  //1. store.ts에 만들어질 isLogin함수 활용해서 로그인 여부 확인
+
+  //2. 로그인 함수
+  const login = async (): Promise<void> => {
+    try{
+      await authToken.login();
+    } catch(error)
+    {}
+  };
+
+  // promise<void> 비동기 함수가 변환하는 값 처리하는 객체(결과 반환 or 오류)
+  // const login = async (): Promise<void> => {
+  //   try {
+  //     //store 내 login 함수로 변경해야 함
+  //     await getApi({ path: 'login' }); 
+  //     goto('/main');
+  //   } catch (error) {
+  //     goto('/login');
+  //   }
+  // };
+
+//  onMount(check);
 </script>
 
 <button class="my-button" on:click={login}>기록 속으로...</button>
