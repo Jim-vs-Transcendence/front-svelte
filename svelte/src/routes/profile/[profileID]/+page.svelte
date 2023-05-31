@@ -1,17 +1,29 @@
 <script>
     import { page } from '$app/stores';
-    const profileID = $page.params.profileID;
+    import { onMount } from 'svelte';
+	import { getApi } from '../../../service/api';
+	const profileID = $page.params.profileID;
 
 	//1. 서버에 profileID인 유저가 있는지 확인 및 본인인지 확인하고 정보 받아야 함
+	// 1.5 받아올 정보는 2개 1. 유저정보 2. 게임 히스토리
 	//2. 없는 유저면(아마 catch로 가겠지?) 메인으로 보내버리고,
 	//3. 본인이면 투팩터 옵션, 본인 아니면 친구 관련 버튼 보이게
 
 	let twoFactor = false;
 	let isMyself = false;
 
-	function toggle() {
-  }
+	let profile_info;
 
+	onMount(async () => {
+		//1. token기반 인증
+
+		//2. target user profile / isMyself가 false라면,
+		profile_info = await getApi({ path: 'user/dhyun' });
+		console.log(profile_info);
+	});  
+
+	function toggle() {
+	}
 </script>
   
 <div class="container">
