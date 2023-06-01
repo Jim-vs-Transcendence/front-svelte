@@ -2,31 +2,34 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation'
   import { getApi } from '../service/api'
-
-  import { authToken } from '../service/store';
+  import { auth, authToken } from '../service/store';
   
   //1. store.ts에 만들어질 isLogin함수 활용해서 로그인 여부 확인
 
   //2. 로그인 함수
+  //promise<void> 비동기 함수가 변환하는 값 처리하는 객체(결과 반환 or 오류)
   const login = async (): Promise<void> => {
-    try{
-      await authToken.login();
-    } catch(error)
-    {}
+    try {
+      //store 내 login 함수로 변경해야 함
+      authToken.login();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // promise<void> 비동기 함수가 변환하는 값 처리하는 객체(결과 반환 or 오류)
-  // const login = async (): Promise<void> => {
-  //   try {
-  //     //store 내 login 함수로 변경해야 함
-  //     await getApi({ path: 'login' }); 
-  //     goto('/main');
-  //   } catch (error) {
-  //     goto('/login');
-  //   }
-  // };
+  let userInfo : any; //여기 any는 나중에 타입 정해지면 바꿔야 함
 
-//  onMount(check);
+  onMount(async () => {
+      try {
+          userInfo = await auth.isLogin();
+          goto('/main');
+      }
+      catch(error) {
+          console.log("user not loggined");
+      }
+    }
+  );
+ 
 </script>
 
 <button class="my-button" on:click={login}>기록 속으로...</button>

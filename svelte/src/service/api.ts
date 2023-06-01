@@ -33,8 +33,8 @@ const send = async ({ method = '', path = '', data = {} }: SendOptions = {}) => 
 const getApi = ({ path = '' }: { path: string }) => {
   return send({ method: 'GET', path });
 };
-const putApi = ({ path = '', data = {} }: { path: string; data: any }) => {
-  return send({ method: 'PUT', path, data });
+const petchApi = ({ path = '', data = {} }: { path: string; data: any }) => {
+  return send({ method: 'PETCH', path, data });
 };
 const postApi = ({ path = '', data = {} }: { path: string; data: any }) => {
   return send({ method: 'POST', path, data });
@@ -43,4 +43,4 @@ const delApi = ({ path = '', data = {} }: { path: string; data: any }) => {
   return send({ method: 'DELETE', path, data });
 };
 
-export { getApi, putApi, postApi, delApi };
+export { getApi, petchApi, postApi, delApi };

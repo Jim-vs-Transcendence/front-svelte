@@ -15,7 +15,7 @@
 	let profile_info;
 
 	onMount(async () => {
-		//1. token기반 인증
+		//1. token기반 
 
 		//2. target user profile / isMyself가 false라면,
 		profile_info = await getApi({ path: 'user/dhyun' });
