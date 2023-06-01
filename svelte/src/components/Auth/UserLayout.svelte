@@ -1,21 +1,32 @@
+<script lang="ts">
+  import { authToken } from '../../service/store';
+
+const logout = () => {
+  authToken.logout()
+};
+
+</script>
+
 <div class="container">
     <nav>
       <ul>
         <li><strong>우리팀 잘한다</strong></li>
       </ul>
       <ul>
-        <li><a href="/main">로그아웃</a></li>
-        <li><a href="/main" role="Home">홈</a></li>
+        <li><button on:click={logout}>로그아웃</button></li>
+        <li><button >홈</button></li>
       </ul>
     </nav>
-  </div>
+</div>
   
   <div class="sidebar">
-    <ul>
-      <li><a href="/profile/Nickname1">Nickname1 </a></li>
-      <li><a href="/profile/jinwoole">jinwoole</a></li>
-      <li><a href="/profile/Whatever">Whatever</a></li>
-    </ul>
+    <figure>
+      <ul>
+        <li><a href="/profile/Nickname1">Nickname1 </a></li>
+        <li><a href="/profile/jinwoole">jinwoole</a></li>
+        <li><a href="/profile/Whatever">Whatever</a></li>
+      </ul>
+    </figure>
   </div>
   
   <style>

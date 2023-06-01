@@ -7,14 +7,9 @@
   //1. store.ts에 만들어질 isLogin함수 활용해서 로그인 여부 확인
 
   //2. 로그인 함수
-  //promise<void> 비동기 함수가 변환하는 값 처리하는 객체(결과 반환 or 오류)
-  const login = async (): Promise<void> => {
-    try {
-      //store 내 login 함수로 변경해야 함
-      authToken.login();
-    } catch (error) {
-      console.log(error);
-    }
+  // 42auth로 연결해서 로그인 후, main으로 가게 됨. 만약 로그인 실패했으면, main에서 다시 돌아오게 됨
+  const login = async () => {
+    await goto("http://43.202.12.31:3000/auth/login");
   };
 
   let userInfo : any; //여기 any는 나중에 타입 정해지면 바꿔야 함
@@ -30,6 +25,7 @@
   );
  
 </script>
+
 
 <button class="my-button" on:click={login}>기록 속으로...</button>
 

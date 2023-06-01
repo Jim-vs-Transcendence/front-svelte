@@ -6,7 +6,7 @@ import { browser } from '$app/environment';
 function setAuth() {
     const isLogin = async () => {
         try {
-            const getUserInfo = await getApi({path: '/user/sdfsdf'});
+            const getUserInfo = await getApi({path: 'token'});
             return getUserInfo;
         }
         catch(error)
@@ -20,23 +20,28 @@ function setAuth() {
 }
 
 function setAuthToken() {
+
     let token: string | null;
+
     if (browser) {
         token = localStorage.getItem('authToken');
     }
-
     const { set } = writable(token);
+    const idStore = writable();
 
-    const login = async () => {
+
+    const login = async (id: string) => {
+        alert(id);
         try {
-            const response = await getApi({ path: 'auth/login' });
-            token = response.authToken;
+            const response = await getApi({ path: 'token/' + id });
+            token = response;
 
             console.log(token); 
             // debug
 
             if (browser && token) {
                 localStorage.setItem('authToken', token);
+                localStorage.setItem('userid', id);
             }
             else {
                 throw new Error('로그인 실패');
@@ -45,16 +50,17 @@ function setAuthToken() {
             goto('/main');
         }
         catch(error) {
-            alert("로그인 실패")
+            alert("로그인 실패 : 토큰")
         }
     }
 
     const logout = async() => {
         try {
-            await postApi({ path: 'user/logout', data: null});
+            await getApi({ path: 'auth/logout'});
             if (browser) {
                 resetAuthToken();
             }
+            goto('.')
         }
         catch(error){
             alert('로그아웃 실패')
@@ -64,6 +70,7 @@ function setAuthToken() {
     const resetAuthToken = () => {
         set('');
         if (browser) {
+            localStorage.removeItem('userid');
             localStorage.removeItem('authToken');
         }
     }
