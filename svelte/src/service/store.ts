@@ -6,7 +6,7 @@ import { browser } from '$app/environment';
 function setAuth() {
     const isLogin = async () => {
         try {
-            const getUserInfo = await getApi({path: '/user'});
+            const getUserInfo = await getApi({path: '/user/sdfsdf'});
             return getUserInfo;
         }
         catch(error)
@@ -29,10 +29,12 @@ function setAuthToken() {
 
     const login = async () => {
         try {
-            const response = await getApi({ path: 'user/token' });
+            const response = await getApi({ path: 'auth/login' });
             token = response.authToken;
 
-            console.log(token);
+            console.log(token); 
+            // debug
+
             if (browser && token) {
                 localStorage.setItem('authToken', token);
             }

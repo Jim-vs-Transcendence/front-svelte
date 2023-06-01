@@ -22,7 +22,6 @@
   onMount(async () => {
       try {
           userInfo = await auth.isLogin();
-          goto('/main');
       }
       catch(error) {
           console.log("user not loggined");
