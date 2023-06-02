@@ -4,15 +4,18 @@
     import { goto } from '$app/navigation'
     import { authToken } from '../../../service/store';
     import { page } from '$app/stores';
+    
+    import LoadingMessage from '../../../components/Auth/LoadingMessage.svelte';
 
     const id = $page.params.id;
 
-
     onMount(async () => {
         await authToken.login(id);
-
         goto('/main');
     }
     );
 </script>
+
+<LoadingMessage />
+
 

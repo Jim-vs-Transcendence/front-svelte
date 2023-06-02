@@ -31,7 +31,6 @@ function setAuthToken() {
 
 
     const login = async (id: string) => {
-        alert(id);
         try {
             const response = await getApi({ path: 'token/' + id });
             token = response;
@@ -50,7 +49,7 @@ function setAuthToken() {
             goto('/main');
         }
         catch(error) {
-            alert("로그인 실패 : 토큰")
+            console.log("로그인 실패 : 토큰");
         }
     }
 

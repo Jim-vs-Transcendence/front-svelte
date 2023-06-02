@@ -3,25 +3,36 @@
     import { auth } from '../../service/store';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
+    import LoadingMessage from "../../components/Auth/LoadingMessage.svelte";
+    import "../../service/userDTO";
 
-    let userInfo : any; //여기 any는 나중에 타입 정해지면 바꾸는게 좋을 듯함
+    let userInfo : UserDTO;
+    let isLoading : boolean = true;
 
     onMount(async () => {
         try {
             userInfo = await auth.isLogin();
-            if (userInfo == false)
+            if (!userInfo) {
+                goto('/');
                 throw("잘못된 접근");
+            }
             console.log(userInfo);
+
+            //여기는 유저 리스트 로딩해야 함
+
+            isLoading = false;
         }
         catch(error) {
-            //토큰이 없거나, 유효하지 않다는 것을 의미
             alert("잘못된 접근");
-            goto('.');
+            goto('/');
         }
     });
 </script>
 
-{#if userInfo === true}
-  <UserLayout />
-  <slot />
+
+{#if isLoading === true}
+    <LoadingMessage />
+{:else}
+    <UserLayout {userInfo}/>
+    <slot />
 {/if}
