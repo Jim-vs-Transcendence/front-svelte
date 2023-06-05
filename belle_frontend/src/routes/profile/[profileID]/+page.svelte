@@ -17,7 +17,6 @@
 	//3. 본인이면 투팩터 옵션, 본인 아니면 친구 관련 버튼 보이게
 
 	let isLoading: boolean = true;
-
 	let userInfo : UserDTO;
 	let twoFactor = false;
 	let isMyself = false;

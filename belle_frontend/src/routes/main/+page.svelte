@@ -1,6 +1,5 @@
 <script lang="ts">
 
-
     const goChat = () => {
         //정보를 보낼때, contextAPI 활용하면 될 듯 함.
         const nickname = localStorage.getItem('userid'); //로컬스토리지에 저장된 키 값을 헤더에 붙여서 보낸다
