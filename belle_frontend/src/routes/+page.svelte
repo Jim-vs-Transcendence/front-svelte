@@ -42,7 +42,7 @@
 {:else}
   <div class="container h-full mx-auto flex justify-center items-center">
     <div class="space-y-5">
-      <button class="btn variant-filled btn-lg rounded-lg transition-transform duration-200 ease-in-out hover:scale-110" data-sveltekit-preload-data="hover" on:click={login}>기록 속으로...</button>
+      <button class="skeleton-button variant-glass-secondary btn-lg rounded-lg transition-transform duration-200 ease-in-out hover:scale-110" data-sveltekit-preload-data="hover" on:click={login}>기록 속으로...</button>
     </div>
   </div>
 {/if}

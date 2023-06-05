@@ -12,5 +12,3 @@
 
 </script>
 
-<button class="outline" on:click={goChat}>말잇수다</button>
-<button class="outline" on:click={goGame}>놀이</button>
