@@ -35,6 +35,7 @@ const closeDrawer = () => {
   position="right"
 >
 
+<!-- 친구 목록 가져오면 됨 -->
 <dl class="list-dl">
 	<div>
     <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
@@ -51,69 +52,6 @@ const closeDrawer = () => {
 		</span>
 	</div>
   <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>
-</dl>
-
-
 </Drawer>
 
 <AppBar slot="headline" class="h-16">
@@ -122,10 +60,11 @@ const closeDrawer = () => {
     <button on:click={logout}>기록 밖으로</button>
     <LightSwitch />
   </div>
-  <p class="text-center" >Jim vs Transcendence</p>
+  <h1 class="h1 text-center -mt-3">
+    <span class="text-3xl bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone">Jim vs Transcendence</span>  
+  </h1>
   <div slot="trail" class="flex items-center space-x-6">
     <Avatar src={userInfo.avatar} on:click={goProfile} width="w-8" rounded="rounded-full" />
     <button type="button" class="btn btn-sm variant-filled" on:click={openDrawer}>동무 목록</button>
-
   </div>
 </AppBar>

@@ -16,10 +16,7 @@
                 goto('/');
                 throw("잘못된 접근");
             }
-            console.log(userInfo);
-
             //여기는 유저 리스트 로딩해야 함
-
             isLoading = false;
         }
         catch(error) {
@@ -28,7 +25,6 @@
         }
     });
 </script>
-
 
 {#if isLoading === true}
     <LoadingMessage />
