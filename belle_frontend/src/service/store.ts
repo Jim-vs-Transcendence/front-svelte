@@ -35,8 +35,8 @@ function setAuthToken() {
             const response = await getApi({ path: 'token/' + id });
             token = response;
 
-            console.log(token); 
-            // debug
+            // console.log(token); 
+            // // debug
 
             if (browser && token) {
                 localStorage.setItem('authToken', token);

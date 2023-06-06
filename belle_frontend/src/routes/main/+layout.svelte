@@ -9,6 +9,10 @@
     let userInfo : UserDTO;
     let isLoading : boolean = true;
 
+    // 친구 불러오기 위함
+    let friendList: UserDTO[] = [];
+
+
     onMount(async () => {
         try {
             userInfo = await auth.isLogin();
@@ -16,7 +20,10 @@
                 goto('/');
                 throw("잘못된 접근");
             }
-            //여기는 유저 리스트 로딩해야 함
+            //여기는 친구 리스트 로딩해야 함
+
+            friendList = [];
+
             isLoading = false;
         }
         catch(error) {
@@ -29,6 +36,6 @@
 {#if isLoading === true}
     <LoadingMessage />
 {:else}
-    <UserLayout {userInfo}/>
+    <UserLayout {userInfo}, {friendList}/>
     <slot />
 {/if}
