@@ -34,7 +34,7 @@ const getApi = ({ path = '' }: { path: string }) => {
   return send({ method: 'GET', path });
 };
 const petchApi = ({ path = '', data = {} }: { path: string; data: any }) => {
-  return send({ method: 'PETCH', path, data });
+  return send({ method: 'PATCH', path, data });
 };
 const postApi = ({ path = '', data = {} }: { path: string; data: any }) => {
   return send({ method: 'POST', path, data });
