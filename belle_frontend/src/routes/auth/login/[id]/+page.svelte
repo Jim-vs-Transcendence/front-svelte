@@ -2,10 +2,10 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
-    import { authToken } from '../../../service/store';
+    import { authToken } from '../../../../service/store';
     import { page } from '$app/stores';
     
-    import LoadingMessage from '../../../components/Auth/LoadingMessage.svelte';
+    import LoadingMessage from '../../../../components/Auth/LoadingMessage.svelte';
 
     const id = $page.params.id;
 
@@ -13,6 +13,7 @@
         await authToken.login(id);
         goto('/main');
     }
+    
     );
 </script>
 
