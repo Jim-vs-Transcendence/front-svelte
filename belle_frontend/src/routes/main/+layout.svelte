@@ -21,8 +21,9 @@
                 throw("잘못된 접근");
             }
             //여기는 친구 리스트 로딩해야 함
-
-            friendList = [];
+            friendList = [
+                
+            ];
 
             isLoading = false;
         }
