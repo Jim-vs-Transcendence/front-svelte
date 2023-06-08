@@ -11,9 +11,14 @@
   
   // socket
   
-  function onRoom() {
+  function onRoom(room: string) {
     console.log("It works");
-    
+    // self.Text
+    console.log("Room clicked:", room);
+    // Add your logic here to handle the room click event
+    // You can navigate to the chat room using the room parameter
+    goto('/chat/${room}');
+
     // Add your logic here to handle the room click event
   }
 
@@ -41,7 +46,7 @@
     <div class="listWrap">
           {#if rooms_list }
           {#each rooms_list as room_once}
-              <div class="room after"> {room_once} </div>
+              <div class="room after" on:click={() => onRoom(room_once)}> {room_once} </div>
           {/each}
           {/if }
       <!-- <div class="room after" onclick="onRoom()">1번 방</div> 
