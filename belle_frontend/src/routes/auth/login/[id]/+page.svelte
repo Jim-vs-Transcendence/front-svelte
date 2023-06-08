@@ -8,6 +8,7 @@
     import LoadingMessage from '../../../../components/Auth/LoadingMessage.svelte';
 
     const id = $page.params.id;
+    let userInfo : UserDTO;
 
     onMount(async () => {
         await authToken.login(id);
