@@ -24,11 +24,14 @@
     if (!profile_info.two_factor) {
         two_factor_toggle();
         popQR = true;
+        (async () => { qr = await postApi({ path: 'two-factor/generate', data:{} }); console.log(qr) })();
+
     }
     profile_info.two_factor = true;
   } else if (twoFactor < 50) {
     if (profile_info.two_factor) {
         two_factor_toggle();
+        popQR = false;
     }
     profile_info.two_factor = false;
   }
@@ -73,7 +76,7 @@
     import { FileButton } from '@skeletonlabs/skeleton';
     
 
-
+    // 투팩터 초기 설정
     onMount(async () => {
 		try{
 			if (isMyself === true)
@@ -112,7 +115,7 @@
                 <div class="fixed inset-0 flex items-center justify-center z-50">
                     <div class="card p-4">
                         <h1>디스이즈 구-글 인증</h1>
-                        <img alt="QR코드" class="w-64 h-64 mb-4">
+                        <img src={qr} alt="QR코드" class="w-64 h-64 mb-4">
                         <div style="display: flex; justify-content: center; align-items: center;">
                             <button type="button" class="btn variant-ghost" on:click={close_qr}>
                                 닫기
