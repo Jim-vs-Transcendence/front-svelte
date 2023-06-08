@@ -17,7 +17,6 @@
 
     // Two-factor toggle
     import { SlideToggle } from '@skeletonlabs/skeleton';
-
     let twoFactor : number;
 
     $: if (twoFactor >= 50) {
@@ -35,7 +34,6 @@
     }
     profile_info.two_factor = false;
   }
-
     $: text = profile_info.two_factor ? '전자우편 인증 작동중' : '전자우편 인증 미작동중';
 
     async function two_factor_toggle() {
@@ -64,13 +62,11 @@
         console.log(getApi({ path: 'user/'+profile_info.id }));
 
     }
-    
+
+    //투팩터 팝업 -> 구글어스 출력
     function close_qr() {
         popQR = false;
     }
-
-    //투팩터 팝업 -> 구글어스 출력
-    
 
     //프로필 사진 업로드
     import { FileButton } from '@skeletonlabs/skeleton';
@@ -96,14 +92,42 @@
 			goto('/main');
 		}
 	});  
+
+
+    // 닉네임 변경
+    async function handleChangeNickname() {
+        const nickname : string = prompt('변경할 닉네임을 입력하세요');
+        if (nickname === "" ||nickname === profile_info.nickname) return;
+        if (nickname.length > 20)
+        {
+            alert("Fork you r nickname : too long");            
+            return;
+        }
+        try {
+            await petchApi({ path: 'user/'+profile_info.id , data:{
+                "nickname" : nickname
+            },
+        });
+        profile_info.nickname = nickname;
+
+        } catch (error) {
+            alert("닉네임 설정 실패");
+        }
+    }
 </script>
 
 <div class="card p-4 flex flex-col items-center">
     <img src="{profile_info.avatar}" alt="인트라 프로필" class="w-48 h-48 rounded-full mb-4">
-    <FileButton name="files" />
     <ul class="text-center">
-      <li class="text-lg font-bold">인트라 ID: {profile_info.id}</li>
+      {#if isMyself}
+        <div>
+            <FileButton name="files" />
+            <button on:click={handleChangeNickname}>닉네임 변경</button>
+        </div>
+      {/if}
       <li class="text-lg font-bold">닉네임 : {profile_info.nickname}</li>
+      <li class="text-lg font-bold">인트라 ID: {profile_info.id}</li>
+
     </ul>
 </div>
 

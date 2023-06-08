@@ -25,6 +25,7 @@
     {
       goto(`../login/${id}`);
     }
+
     } catch (error) {
       alert("에러");
     }
@@ -37,6 +38,7 @@
       errorClass = "";
     }
   }
+  
 </script>
 
 
