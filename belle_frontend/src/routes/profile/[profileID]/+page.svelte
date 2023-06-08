@@ -10,6 +10,7 @@
 	import '../../../service/userDTO';
 	import LoadingMessage from '../../../components/Auth/LoadingMessage.svelte';
 	import UserProfile from '../../../components/Profile/UserProfile.svelte';
+	import MatchHistory from '../../../components/Profile/MatchHistory.svelte';
 
 	//1. 서버에 profileID인 유저가 있는지 확인 및 본인인지 확인하고 정보 받아야 함
 	// 1.5 받아올 정보는 2개 1. 유저정보 2. 게임 히스토리
@@ -17,7 +18,6 @@
 	//3. 본인이면 투팩터 옵션, 본인 아니면 친구 관련 버튼 보이게
 
 	let isLoading: boolean = true;
-
 	let userInfo : UserDTO;
 	let twoFactor = false;
 	let isMyself = false;
@@ -53,7 +53,15 @@
 {#if isLoading === true}
 	<LoadingMessage />
 {:else}
-	<UserProfile {profile_info} {isMyself} />
+<div class="flex">
+    <div class="flex-1">
+      <UserProfile {profile_info} {isMyself} class="border-r pr-4" />
+    </div>
+    <div class="flex-1">
+      <MatchHistory {profile_info}/>
+    </div>
+  </div>
+
 {/if}
 
 
