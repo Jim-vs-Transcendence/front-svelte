@@ -7,7 +7,9 @@
 
 	const profileID = $page.params.profileID;
 
-	import '../../../service/userDTO';
+	import  '../../../service/userDTO';
+	import  '../../../service/friendDTO';
+
 	import LoadingMessage from '../../../components/Auth/LoadingMessage.svelte';
 	import UserProfile from '../../../components/Profile/UserProfile.svelte';
 	import MatchHistory from '../../../components/Profile/MatchHistory.svelte';
@@ -21,9 +23,11 @@
 	let userInfo : UserDTO;
 	let twoFactor = false;
 	let isMyself = false;
+	let isFriend : boolean = false;
 
 	let profile_info : UserDTO;
 	let profile_path : string;
+	let friendList : friendDTO[];
 
 	onMount(async () => {
 		try{
@@ -39,6 +43,18 @@
 				isMyself = true;
 				twoFactor = userInfo.two_factor;
 			}
+			else
+			{
+				const friendList : friendDTO[] = await getApi({ path: 'friends' });
+                console.log(friendList);
+				const found = friendList.find((friend) => friend.id.includes(profileID));
+				if (found) {
+					isFriend = true;
+				}
+				else {
+					isFriend = false;
+				}
+			}
 			isLoading = false;
 		}
 		catch(error){
@@ -53,14 +69,14 @@
 {#if isLoading === true}
 	<LoadingMessage />
 {:else}
-<div class="flex">
-    <div class="flex-1">
-      <UserProfile {profile_info} {isMyself} class="border-r pr-4" />
-    </div>
-    <div class="flex-1">
-      <MatchHistory {profile_info}/>
-    </div>
-  </div>
+<div class="flex h-screen justify-center items-center">
+	  <div class="flex-1">
+		<UserProfile {profile_info} {isMyself} {isFriend} />
+	  </div>
+	  <div class="flex-1">
+		<MatchHistory {profile_info}/>
+	  </div>
+</div>
 
 {/if}
 

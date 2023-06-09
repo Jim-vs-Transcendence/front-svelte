@@ -1,19 +1,27 @@
 <script lang="ts">
     export let profile_info: UserDTO;
     export let isMyself: boolean;
+    export let isFriend: boolean;
+
+    $: isFriend;
+
 
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
 	import { auth } from '../../service/store';
 	import { goto } from '$app/navigation';
 
+    let isBlocked : boolean = false;
+    $ : isBlocked;
+
     // export let isFriend: boolean;
-    let isFriend : boolean = true;
     let qr : any;
     let popQR : boolean = false;
 
+    //유저가 친구인지 뭔지에 대한 정보
+    let friendInfo : friendDTO;
 
-    import { getApi, petchApi, postApi } from '../../service/api';
+    import { getApi, petchApi, postApi, delApi } from '../../service/api';
 
     // Two-factor toggle
     import { SlideToggle } from '@skeletonlabs/skeleton';
@@ -21,10 +29,8 @@
 
     $: if (twoFactor >= 50) {
     if (!profile_info.two_factor) {
-        two_factor_toggle();
         popQR = true;
-        (async () => { qr = await postApi({ path: 'two-factor/generate', data:{} }); console.log(qr) })();
-
+        (async () => { qr = await postApi({ path: 'two-factor/generate', data:{} }); })();
     }
     profile_info.two_factor = true;
   } else if (twoFactor < 50) {
@@ -64,14 +70,29 @@
     }
 
     //투팩터 팝업 -> 구글어스 출력
-    function close_qr() {
-        popQR = false;
+    async function close_qr() {
+
+        const input : string | null = prompt('구글 인증기에 등록했나요? 코드를 입력하세요');
+        try {
+            const response = await postApi({
+                path: 'two-factor/init_authentication/' + profile_info.id,
+                data: {
+                    "twoFactorAuthenticationCode": input
+                    }
+                    }
+                );
+                if (response === true) {
+                    two_factor_toggle();
+                    popQR = false;
+                }
+        } catch (error) {
+            alert("에러");
+        }
     }
 
     //프로필 사진 업로드
     import { FileButton } from '@skeletonlabs/skeleton';
     
-
     // 투팩터 초기 설정
     onMount(async () => {
 		try{
@@ -86,6 +107,9 @@
                     twoFactor = 0;
                 }
             }
+            //친구인지 여부 뭐 그런거 가져와야 함
+            friendInfo = await getApi({ path: 'friends' });
+            
 		}
 		catch(error){
 			alert('오류 : 프로필을 출력할 수 없습니다');
@@ -96,7 +120,7 @@
 
     // 닉네임 변경
     async function handleChangeNickname() {
-        const nickname : string = prompt('변경할 닉네임을 입력하세요');
+        const nickname : string = prompt('변경할 가짜 이름을 입력하세요');
         if (nickname === "" ||nickname === profile_info.nickname) return;
         if (nickname.length > 20)
         {
@@ -111,9 +135,61 @@
         profile_info.nickname = nickname;
 
         } catch (error) {
-            alert("닉네임 설정 실패");
+            alert("가짜이름 설정 실패");
         }
     }
+
+    // 친구 추가
+    async function requestFriend() {
+        try {
+            await postApi({ path: 'friends/requests' , data:{
+                "user_to" : profile_info.id
+            } });
+        } catch (error) {
+            alert("wer");
+        }
+    }
+
+    //친구 제거
+    async function deleteFriend() {
+        try {
+            await delApi({ path: 'friends/' + profile_info.id , data:{
+            } });
+            isFriend = false;
+        } catch (error) {
+            alert("wer");
+        }
+    }
+
+    //검열
+    async function blockToggle() {
+        if (isBlocked === false)
+        {        
+            try {
+            await postApi({ path: 'block' , data:{
+                "user_to" : profile_info.id
+            }  
+            });
+            isBlocked = true;
+            } catch (error) {
+                alert("wer");
+            }
+        }
+        else
+        {
+            try {
+            await postApi({ path: 'block' , data:{
+                "user_to" : profile_info.id
+            }  
+            });
+            isBlocked = true;
+            } catch (error) {
+                alert("wer");
+            }
+        }
+    }
+
+
 </script>
 
 <div class="card p-4 flex flex-col items-center">
@@ -122,15 +198,14 @@
       {#if isMyself}
         <div>
             <FileButton name="files" />
-            <button on:click={handleChangeNickname}>닉네임 변경</button>
+            <button on:click={handleChangeNickname}>가짜이름 변경</button>
         </div>
       {/if}
-      <li class="text-lg font-bold">닉네임 : {profile_info.nickname}</li>
+      <li class="text-lg font-bold">가짜이름 : {profile_info.nickname}</li>
       <li class="text-lg font-bold">인트라 ID: {profile_info.id}</li>
 
     </ul>
 </div>
-
 
 <!-- two-factor 혹은 친구 -->
 <div class="grid">	
@@ -162,10 +237,14 @@
         <div class="flex justify-center pt-4">
             <div class="btn-group variant-filled mx-auto inline-flex">
             {#if isFriend === true}
-                <button class="flex-1">무참히 절교</button>
+                <button class="flex-1" on:click={deleteFriend}>무참히 절교</button>
             {:else}
-                <button class="flex-1">동무 추가</button>
-                <button class="flex-1">검열</button>
+                <button class="flex-1" on:click={requestFriend}>동무 추가</button>
+                {#if isBlocked === false}
+                    <button class="flex-1" on:click={blockToggle}>검열</button>
+                {:else}
+                    <button class="flex-1" on:click={blockToggle}>검열 해제</button>
+                {/if}
             {/if}
             </div>
         </div>

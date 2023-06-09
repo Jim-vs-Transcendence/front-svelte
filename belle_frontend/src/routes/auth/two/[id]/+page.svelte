@@ -10,9 +10,7 @@
   let authKey : string;
   let errorClass = "";
 
-  async function handleSubmit(input: string): Promise<void> {
-    console.log("123")
-    
+  async function handleSubmit(input: string): Promise<void> {    
     try {
         response = await postApi({ path: 'two-factor/authentication/' + id, data: 
           {
