@@ -1,5 +1,5 @@
 <script lang="ts">
-
+  import { goto } from '$app/navigation'
   import ioClient from 'socket.io-client';
   
   // const ENDPOINT = 'http://localhost:3000/chat';
@@ -17,7 +17,7 @@
     console.log("Room clicked:", room);
     // Add your logic here to handle the room click event
     // You can navigate to the chat room using the room parameter
-    goto('/chat/${room}');
+    goto('/main/chat/${room}');
 
     // Add your logic here to handle the room click event
   }
