@@ -5,11 +5,11 @@
 
     $: isFriend;
 
-
     import { page } from '$app/stores';
     import { onMount } from 'svelte';
 	import { auth } from '../../service/store';
 	import { goto } from '$app/navigation';
+    import '../../service/friendDTO'
 
     let isBlocked : boolean = false;
     $ : isBlocked;
@@ -20,6 +20,7 @@
 
     //유저가 친구인지 뭔지에 대한 정보
     let friendInfo : friendDTO;
+    let friendStat : string;
 
     import { getApi, petchApi, postApi, delApi } from '../../service/api';
 
@@ -108,11 +109,11 @@
                 }
             }
             //친구인지 여부 뭐 그런거 가져와야 함
-            friendInfo = await getApi({ path: 'friends' });
-            
+            friendInfo = await getApi({ path: 'friends/' + profile_info.id });
+            friendStat = friendInfo.friendStatus;
 		}
 		catch(error){
-			alert('오류 : 프로필을 출력할 수 없습니다');
+			alert('오류 : 프로필을 출력할 수 없습니다3');
 			goto('/main');
 		}
 	});  
@@ -166,29 +167,27 @@
         if (isBlocked === false)
         {        
             try {
-            await postApi({ path: 'block' , data:{
-                "user_to" : profile_info.id
+            await postApi({ path: 'friends/blocks/' + profile_info.id , data:{
             }  
             });
             isBlocked = true;
             } catch (error) {
-                alert("wer");
+                alert("블럭 오류");
             }
         }
         else
         {
             try {
-            await postApi({ path: 'block' , data:{
+            await delApi({ path: 'friends/' + profile_info.id , data:{
                 "user_to" : profile_info.id
             }  
             });
-            isBlocked = true;
+            isBlocked = false;
             } catch (error) {
-                alert("wer");
+                alert("블럭 해제 오류");
             }
         }
     }
-
 
 </script>
 
@@ -200,10 +199,23 @@
             <FileButton name="files" />
             <button on:click={handleChangeNickname}>가짜이름 변경</button>
         </div>
+      {:else}
+        <div>
+            {#if friendStat === "blocked"}
+            <p>차단한 반동분자</p>
+            {:else if friendStat === "accepted"}
+            <p>수락한 친구</p>
+            {:else if friendStat === "pending"}
+            <p>안 수락함</p>
+            {:else}
+            <p>아무것도 아닌 사람</p>
+         {/if}
+
+        </div>
       {/if}
       <li class="text-lg font-bold">가짜이름 : {profile_info.nickname}</li>
       <li class="text-lg font-bold">인트라 ID: {profile_info.id}</li>
-
+    
     </ul>
 </div>
 
