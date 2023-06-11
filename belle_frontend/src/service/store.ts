@@ -59,7 +59,7 @@ function setAuthToken() {
             if (browser) {
                 resetAuthToken();
             }
-            goto('.')
+            goto('/')
         }
         catch(error){
             alert('로그아웃 실패')

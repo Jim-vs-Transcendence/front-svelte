@@ -42,7 +42,7 @@
 			isLoading = false;
 		}
 		catch(error){
-			alert('오류 : 프로필을 출력할 수 없습니다');
+			alert('오류 : 프로필을 출력할 수 없습니다2');
 			goto('/main');
 		}
 	});  
