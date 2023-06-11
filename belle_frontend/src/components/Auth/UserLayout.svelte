@@ -35,7 +35,7 @@ const openDrawer = () => {
   position="right"
 >
 
-<!-- 친구 목록 -->
+<!-- 친구 목록 : 옆으로 뜨는거 수정해야함 -->
 <dl class="list-dl">
 	<div>
     {#each friendList as friend}
@@ -43,10 +43,11 @@ const openDrawer = () => {
       <Avatar src={friend.avatar} on:click={() => goProfile(friend.id)} width="w-7" rounded="rounded-full" />
       <span class="flex-auto">
         <dt>{friend.id}</dt>
-        <dd>{friend.status}</dd>
+        <dd>{friend.friendStatus}</dd>
       </span>
     </div>
   {/each}
+
 </Drawer>
 
 

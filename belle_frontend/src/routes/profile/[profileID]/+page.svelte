@@ -61,9 +61,7 @@
 			alert('오류 : 프로필을 출력할 수 없습니다1');
 			goto('/main');
 		}
-	});  
-
-
+	});
 </script>
 
 {#if isLoading === true}
@@ -77,7 +75,6 @@
 		<MatchHistory {profile_info}/>
 	  </div>
 </div>
-
 {/if}
 
 

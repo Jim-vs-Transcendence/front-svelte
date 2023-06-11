@@ -236,7 +236,7 @@
                 </div>
             {/if}
 
-            <!-- two-factor 인증 -->
+            <!-- two-factor 인증\-->
             <!-- svelte-ignore a11y-label-has-associated-control -->
             <label class="flex items-center">
                 <input type="range" bind:value={twoFactor} max="100" />
