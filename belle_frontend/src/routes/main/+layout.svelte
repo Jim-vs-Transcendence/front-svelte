@@ -5,12 +5,14 @@
     import { goto } from '$app/navigation'
     import LoadingMessage from "../../components/Auth/LoadingMessage.svelte";
     import "../../service/userDTO";
+    import "../../service/friendDTO"
+    import { getApi } from "../../service/api";
 
     let userInfo : UserDTO;
     let isLoading : boolean = true;
 
     // 친구 불러오기 위함
-    let friendList: UserDTO[] = [];
+    let friendList: friendDTO[] = [];
 
 
     onMount(async () => {
@@ -20,10 +22,8 @@
                 goto('/');
                 throw("잘못된 접근");
             }
-            //여기는 친구 리스트 로딩해야 함
 
-            friendList = [];
-
+            friendList = await getApi({ path: 'friends' });
             isLoading = false;
         }
         catch(error) {
@@ -36,6 +36,6 @@
 {#if isLoading === true}
     <LoadingMessage />
 {:else}
-    <UserLayout {userInfo}, {friendList}/>
+    <UserLayout {userInfo} {friendList}/>
     <slot />
 {/if}

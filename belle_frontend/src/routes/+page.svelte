@@ -3,7 +3,6 @@
   import { goto } from '$app/navigation'
   import { auth } from '../service/store';
 
-  
   import '../service/userDTO';
   import LoadingMessage from "../components/Auth/LoadingMessage.svelte"
   

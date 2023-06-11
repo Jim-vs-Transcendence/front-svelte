@@ -2,9 +2,10 @@
 	import { goto } from '$app/navigation';
   import { authToken } from '../../service/store';
   import '../../service/userDTO';
-  export let userInfo: UserDTO ;
-  export let friendList: UserDTO[] ;
+  import '../../service/friendDTO';
 
+  export let userInfo: UserDTO ;
+  export let friendList: friendDTO[] ;
 
   //css
   import { AppBar } from '@skeletonlabs/skeleton';
@@ -12,6 +13,7 @@
   import { LightSwitch } from '@skeletonlabs/skeleton';
   import { Drawer, drawerStore } from '@skeletonlabs/skeleton';
   import type { DrawerSettings } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
 
 const logout = () => {
   authToken.logout()
@@ -33,24 +35,22 @@ const openDrawer = () => {
   position="right"
 >
 
-<!-- 친구 목록 가져오면 됨 -->
+<!-- 친구 목록 : 옆으로 뜨는거 수정해야함 -->
 <dl class="list-dl">
 	<div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>jinwoole</dt>
-			<dd>접속중</dd>
-		</span>
-	</div>
-  <div>
-    <Avatar src={userInfo.avatar} on:click={goProfile} width="w-7" rounded="rounded-full" />
-		<span class="flex-auto">
-			<dt>sesim</dt>
-			<dd>자는중</dd>
-		</span>
-	</div>
-  <div>
+    {#each friendList as friend}
+    <div>
+      <Avatar src={friend.avatar} on:click={() => goProfile(friend.id)} width="w-7" rounded="rounded-full" />
+      <span class="flex-auto">
+        <dt>{friend.id}</dt>
+        <dd>{friend.friendStatus}</dd>
+      </span>
+    </div>
+  {/each}
+
 </Drawer>
+
+
 
 <!-- 상단바 -->
 <AppBar slot="headline" class="h-16">
