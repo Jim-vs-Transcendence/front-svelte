@@ -3,6 +3,8 @@
   import { goto } from '$app/navigation'
   import { auth } from '../service/store';
 
+  let backUrl = import.meta.env.VITE_API_URL;
+
   import '../service/userDTO';
   import LoadingMessage from "../components/Auth/LoadingMessage.svelte"
   
