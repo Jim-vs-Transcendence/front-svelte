@@ -8,7 +8,6 @@
     <li class="text-lg font-bold">패 : {profile_info.lose}</li>
 </div>
 
-
 <style>
 
 </style>
