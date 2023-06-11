@@ -3,6 +3,8 @@
   import { goto } from '$app/navigation'
   import { auth } from '../service/store';
 
+  let backUrl = import.meta.env.VITE_API_URL;
+
   import '../service/userDTO';
   import LoadingMessage from "../components/Auth/LoadingMessage.svelte"
   
@@ -30,7 +32,7 @@
   //2. 로그인 함수
   // 42auth로 연결해서 로그인 후, main으로 가게 됨. 만약 로그인 실패했으면, main에서 다시 돌아오게 됨
   const login = async () => {
-    await goto("http://43.202.12.31:3000/auth/login");
+    await goto(backUrl + "/auth/login");
   };
  
 </script>
