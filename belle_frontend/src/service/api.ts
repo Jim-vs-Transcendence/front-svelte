@@ -7,7 +7,7 @@ interface SendOptions {
 }
 
 const send = async ({ method = '', path = '', data = {} }: SendOptions = {}) => {
-  const commonUrl = 'http://43.202.12.31:3000/' //'http://localhost:3000/api';
+  const commonUrl = 'http://localhost:3000/' //'http://localhost:3000/api';
   const url = commonUrl + path;
   const getToken = localStorage.getItem('authToken'); //로컬스토리지에 저장된 키 값을 헤더에 붙여서 보낸다
   const headers = {

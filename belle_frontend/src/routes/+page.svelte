@@ -32,7 +32,7 @@
   //2. 로그인 함수
   // 42auth로 연결해서 로그인 후, main으로 가게 됨. 만약 로그인 실패했으면, main에서 다시 돌아오게 됨
   const login = async () => {
-    await goto(backUrl + "/auth/login");
+    await goto("http://localhost:3000/auth/login");
   };
  
 </script>
